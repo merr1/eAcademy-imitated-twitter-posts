@@ -32,11 +32,9 @@ const NewsFeed = ({
 
   const handleOnClick = (e) => {
     e.stopPropagation();
-    if (coments && commentRef.current && !commentRef.current.contains(e.target))
-      setComents(false);
+    if (coments && !commentRef?.current.contains(e.target)) setComents(false);
 
-    if (mores && moresRef.current && !moresRef.current.contains(e.target))
-      setMores(false);
+    if (mores && !moresRef?.current.contains(e.target)) setMores(false);
   };
 
   const close = () => {
