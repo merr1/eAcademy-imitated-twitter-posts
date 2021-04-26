@@ -14,11 +14,8 @@ const AllPosts = () => {
     setLength(data.length);
   };
 
-  function range(start, end) {
-    return Array(end - start + 1)
-      .fill()
-      .map((_, idx) => start + idx);
-  }
+  const range = (start, end) =>
+    [...Array(end + 1).keys()].slice(start, end + 1);
 
   const handleLike = (id) =>
     setLike({
@@ -26,14 +23,14 @@ const AllPosts = () => {
       [id]: { ...like[id], like: !like[id]?.like },
     });
 
-  const removeItem = (id) => {
+  const removeItem = (id) =>
     isopen ? setdata(range(id, id)) : setdata(range(1, length));
-  };
 
   useEffect(() => {
     getUsers();
     setdata(range(1, length));
   }, [length]);
+
   return length && data ? (
     <div className="newsFeed">
       {data.map((id) => (

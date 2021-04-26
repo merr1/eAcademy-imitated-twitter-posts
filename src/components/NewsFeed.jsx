@@ -29,22 +29,21 @@ const NewsFeed = ({
     e.stopPropagation();
     coments === false ? setComents(true) : setComents(false);
   };
-  const handleLike = (id) => {
-    saveMyLikes(id);
+
+  const handleLike = (e) => {
+    saveMyLikes(post.id);
+    e.stopPropagation();
   };
+
   const handleOnClick = (e) => {
     e.stopPropagation();
-    if (
-      coments &&
-      commentRef.current &&
-      !commentRef.current.contains(e.target)
-    ) {
+    if (coments && commentRef.current && !commentRef.current.contains(e.target))
       setComents(false);
-    }
-    if (mores && moresRef.current && !moresRef.current.contains(e.target)) {
+
+    if (mores && moresRef.current && !moresRef.current.contains(e.target))
       setMores(false);
-    }
   };
+
   const close = () => {
     isopen ? setIsopen(false) : setIsopen(true);
     removeItem(id);
@@ -54,6 +53,7 @@ const NewsFeed = ({
     document.addEventListener("click", handleOnClick);
     return () => document.removeEventListener("click", handleOnClick);
   });
+
   return (
     allDataIsReceived && (
       <div className="newsFeed" id={"post" + id}>
@@ -78,14 +78,13 @@ const NewsFeed = ({
                       className="like"
                       alt="like"
                       onClick={(e) => {
-                        handleLike(post.id);
-                        e.stopPropagation();
+                        handleLike(e);
                       }}
                       src={likesArray[post.id]?.like ? liked : like}
                     />
                   </div>
                   <div className="single_post" onClick={close}>
-                    see post
+                    {isopen ? " see post" : "unsee post"}
                   </div>
                 </div>
               )}
@@ -105,7 +104,7 @@ const NewsFeed = ({
                   <img
                     className="like"
                     alt="like"
-                    onClick={() => handleLike(post.id)}
+                    onClick={(e) => handleLike(e)}
                     src={likesArray[post.id]?.like ? liked : like}
                   />
                 </div>
@@ -122,7 +121,6 @@ const NewsFeed = ({
                   <div className="profile">{comment.email[0]}</div>
                   <span>{comment.email}</span>
                 </div>
-
                 <p>{comment.body}</p>
               </div>
             ))}
