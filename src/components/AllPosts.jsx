@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NewsFeed from "./NewsFeed";
 import Loader from "react-loader-spinner";
+import { range } from "./Helper";
 
 const AllPosts = () => {
   const [length, setLength] = useState(null);
@@ -14,17 +15,13 @@ const AllPosts = () => {
     setLength(data.length);
   };
 
-  const range = (start, end) =>
-    [...Array(end + 1).keys()].slice(start, end + 1);
-
   const handleLike = (id) =>
     setLike({
       ...like,
       [id]: { ...like[id], like: !like[id]?.like },
     });
 
-  const removeItem = (id) =>
-    isopen ? setdata(range(id, id)) : setdata(range(1, length));
+  const removeItem = (id) => setdata(isopen ? range(id, id) : range(1, length));
 
   useEffect(() => {
     getUsers();

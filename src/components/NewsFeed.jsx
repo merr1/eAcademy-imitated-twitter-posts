@@ -20,14 +20,9 @@ const NewsFeed = ({
   const moresRef = useRef(null);
   const commentRef = useRef(null);
 
-  const moreFunction = (e) => {
+  const moreAndComFunction = (e, state, setState) => {
     e.stopPropagation();
-    mores ? setMores(false) : setMores(true);
-  };
-
-  const comFunction = (e) => {
-    e.stopPropagation();
-    coments === false ? setComents(true) : setComents(false);
+    setState(!state);
   };
 
   const handleLike = (e) => {
@@ -45,7 +40,7 @@ const NewsFeed = ({
   };
 
   const close = () => {
-    isopen ? setIsopen(false) : setIsopen(true);
+    setIsopen(!isopen);
     removeItem(id);
   };
 
@@ -68,7 +63,10 @@ const NewsFeed = ({
                 <span>{user.email}</span>
               </div>
               {!mores ? (
-                <div className="moreContainer" onClick={(e) => moreFunction(e)}>
+                <div
+                  className="moreContainer"
+                  onClick={(e) => moreAndComFunction(e, mores, setMores)}
+                >
                   <img className="more" src={more} alt="more icon" />
                 </div>
               ) : (
@@ -96,7 +94,10 @@ const NewsFeed = ({
               <img src={photo.url} alt={photo.title} />
             </div>
             <div className="icons">
-              <div className="comentcontainer" onClick={(e) => comFunction(e)}>
+              <div
+                className="comentcontainer"
+                onClick={(e) => moreAndComFunction(e, coments, setComents)}
+              >
                 <img className="coment" alt="coment icon" src={coment} />
               </div>
               <div className="likeContainer">
