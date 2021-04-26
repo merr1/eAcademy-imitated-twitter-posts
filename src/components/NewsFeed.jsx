@@ -20,15 +20,20 @@ const NewsFeed = ({
   const moresRef = useRef(null);
   const commentRef = useRef(null);
 
-  const moreFunction = () => {
+  const moreFunction = (e) => {
+    e.stopPropagation();
     mores ? setMores(false) : setMores(true);
   };
 
-  const comFunction = () => {
+  const comFunction = (e) => {
+    e.stopPropagation();
     coments === false ? setComents(true) : setComents(false);
   };
-  const handleLike = (id) => saveMyLikes(id);
+  const handleLike = (id) => {
+    saveMyLikes(id);
+  };
   const handleOnClick = (e) => {
+    e.stopPropagation();
     if (
       coments &&
       commentRef.current &&
@@ -52,7 +57,7 @@ const NewsFeed = ({
   return (
     allDataIsReceived && (
       <div className="newsFeed" id={"post" + id}>
-        <div className="post">
+        <div className="post" onClick={close}>
           <div className="userPhoto">
             <div className="profile">{user.name[0]}</div>
           </div>
@@ -63,7 +68,7 @@ const NewsFeed = ({
                 <span>{user.email}</span>
               </div>
               {!mores ? (
-                <div className="moreContainer" onClick={moreFunction}>
+                <div className="moreContainer" onClick={(e) => moreFunction(e)}>
                   <img className="more" src={more} alt="more icon" />
                 </div>
               ) : (
@@ -72,7 +77,10 @@ const NewsFeed = ({
                     <img
                       className="like"
                       alt="like"
-                      onClick={() => handleLike(post.id)}
+                      onClick={(e) => {
+                        handleLike(post.id);
+                        e.stopPropagation();
+                      }}
                       src={likesArray[post.id]?.like ? liked : like}
                     />
                   </div>
@@ -89,7 +97,7 @@ const NewsFeed = ({
               <img src={photo.url} alt={photo.title} />
             </div>
             <div className="icons">
-              <div className="comentcontainer" onClick={() => comFunction()}>
+              <div className="comentcontainer" onClick={(e) => comFunction(e)}>
                 <img className="coment" alt="coment icon" src={coment} />
               </div>
               <div className="likeContainer">
