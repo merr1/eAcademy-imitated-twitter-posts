@@ -68,7 +68,11 @@ const NewsFeed = ({
                   <img className="more" src={more} alt="more icon" />
                 </div>
               ) : (
-                <div className="option" ref={moresRef}>
+                <div
+                  className="option"
+                  ref={moresRef}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="likeContainer">
                     <img
                       className="like"
